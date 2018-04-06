@@ -1,0 +1,15 @@
+{
+  "name": "auth0-custom-domains-app",
+  "version": "1.0.0",
+  "repository": "git@github.com:luisrudge/auth0-custom-domains-app.git",
+  "author": "Auth0 <support@auth0.com> (http://auth0.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "prettier": "^1.11.1",
+    "pretty-quick": "^1.4.1"
+  },
+  "scripts": {
+    "precommit": "pretty-quick --staged"
+  }
+}

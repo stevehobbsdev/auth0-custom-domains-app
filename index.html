@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Test</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+<title>Dev</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/2.0.5/core.min.css" />
+<link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/2.0.0/components.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.min.css" />
 
 <body>
-  test2
+  <header class="site-header">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <h1 class="navbar-brand">
+            <a href="https://auth0.com">
+              <span>Auth0</span>
+            </a>
+          </h1>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="btn-show-lock" class="btn btn-default">Show Lock</div>
+        <div id="btn-show-passwordless" class="btn btn-default">Show Lock+Passwordless</div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="btn-clear-log" class="btn btn-danger">Clear logs</div>
+      </div>
+      <div class="col-sm-12" style="margin-top: 10px; max-height: 800px; overflow: auto;">
+        <pre>
+          <code id="logger" class="language-js"></code>
+        </pre>
+      </div>
+    </div>
+  </main>
+  <script src="https://unpkg.com/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+  <script id="lock-script" src="https://cdn.auth0.com/js/lock/11.5/lock.js"></script>
+  <script src="/app.js"></script>
 </body>
 
 </html>

@@ -57,19 +57,20 @@ function subscribeToEvents(instance) {
   });
 }
 
-const clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
-const domain = 'auth.brucke.club';
-const defaultOptions = {
+var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
+var domain = 'auth.brucke.club';
+var defaultOptions = {
   configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,
-  usernameStyle: 'email',
-  defaultDatabaseConnection: 'acme',
   prefill: {
     email: 'johnfoo@gmail.com'
-  },
-  passwordlessMethod: 'code',
-  allowedConnections: ['email', 'acme', 'twitter']
+  }
 };
+var auth0 = new auth0.WebAuth({
+  domain: domain,
+  redirectUri: 'https://brucke.club/',
+  clientID: clientId
+});
 function initLock() {
   var lock = new Auth0Lock(clientId, domain, defaultOptions);
   window.localStorage.lastUsed = 'lock';
@@ -103,15 +104,31 @@ $(function() {
       }
     });
   });
+  $('#btn-ulp').on('click', function() {
+    clearLogs();
+    window.localStorage.lastUsed = 'a0js';
+    auth0.authorize();
+  });
   //make sure we initialize Lock so we can parse the hash
   var lastUsed = window.localStorage.lastUsed;
   if (!lastUsed) {
     return;
   }
-  if (lastUsed === 'lock') {
-    initLock();
-  } else {
-    initPasswordless();
+  switch (lastUsed) {
+    case 'lock':
+      initLock();
+      break;
+    case 'passwordless':
+      initPasswordless();
+      break;
+    case 'a0js':
+      auth0.parseHash(function(err, authResult) {
+        logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
+        printLogs();
+      });
+      break;
+    default:
+      break;
   }
   window.localStorage.removeItem('lastUsed');
 });

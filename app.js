@@ -69,7 +69,8 @@ var defaultOptions = {
 var auth0 = new auth0.WebAuth({
   domain: domain,
   redirectUri: 'https://brucke.club/',
-  clientID: clientId
+  clientID: clientId,
+  responseType: 'token'
 });
 function initLock() {
   var lock = new Auth0Lock(clientId, domain, defaultOptions);

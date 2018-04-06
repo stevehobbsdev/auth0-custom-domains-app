@@ -60,6 +60,7 @@ function subscribeToEvents(instance) {
 const clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
 const domain = 'auth.brucke.club';
 const defaultOptions = {
+  configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,
   usernameStyle: 'email',
   defaultDatabaseConnection: 'acme',

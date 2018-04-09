@@ -67,7 +67,7 @@ var defaultOptions = {
   },
   auth: {
     params: {
-      scope: 'openid profile'
+      scope: 'openid'
     }
   }
 };

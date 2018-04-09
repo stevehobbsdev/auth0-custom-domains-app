@@ -60,13 +60,13 @@ function subscribeToEvents(instance) {
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
 var domain = 'auth.brucke.club';
 var defaultOptions = {
-  audience: 'https://brucke.auth0.com/api/v2/',
   configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'
   },
   auth: {
+    audience: 'https://brucke.auth0.com/api/v2/',
     params: {
       scope: 'openid'
     }

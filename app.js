@@ -64,6 +64,11 @@ var defaultOptions = {
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'
+  },
+  auth: {
+    params: {
+      scope: 'openid profile'
+    }
   }
 };
 var auth0 = new auth0.WebAuth({

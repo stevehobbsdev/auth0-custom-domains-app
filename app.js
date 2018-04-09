@@ -68,7 +68,7 @@ var defaultOptions = {
   auth: {
     audience: 'https://brucke.auth0.com/api/v2/',
     params: {
-      scope: 'openid'
+      scope: 'openid email'
     }
   }
 };

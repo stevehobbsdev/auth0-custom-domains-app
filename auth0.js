@@ -2182,7 +2182,6 @@
          */
         CrossOriginAuthentication.prototype.login = function(options, cb) {
           var _this = this;
-          var theWindow = windowHelper.getWindow();
           var url = urljoin(this.baseOptions.rootUrl, '/co/authenticate');
           options.username = options.username || options.email;
           delete options.email;
@@ -2232,7 +2231,7 @@
                 .merge(options)
                 .with({ loginTicket: data.body.login_ticket });
               var key = createKey(_this.baseOptions.rootUrl, data.body.co_id);
-              storage.setItem(key, data.body.co_verifier, { expires: 10 / 1440 / 60 });
+              storage.setItem(key, data.body.co_verifier, { expires: 1 / 48 }); // 30 minutes
               if (popupMode) {
                 _this.webMessageHandler.run(
                   authorizeOptions,
@@ -2336,12 +2335,16 @@
           state = state || random.randomString(this.keyLength);
           nonce = nonce || (generateNonce ? random.randomString(this.keyLength) : null);
 
-          storage.setItem(this.namespace + state, {
-            nonce: nonce,
-            appState: appState,
-            state: state,
-            lastUsedConnection: lastUsedConnection
-          });
+          storage.setItem(
+            this.namespace + state,
+            {
+              nonce: nonce,
+              appState: appState,
+              state: state,
+              lastUsedConnection: lastUsedConnection
+            },
+            { expires: 1 / 48 }
+          ); // 30 minutes
           return {
             state: state,
             nonce: nonce
@@ -4806,7 +4809,7 @@
               lastUsedConnection: connection,
               lastUsedSub: sub
             };
-            storage.setItem('auth0.ssodata', JSON.stringify(ssodata));
+            storage.setItem('auth0.ssodata', JSON.stringify(ssodata), { expires: 1 }); // 1 day
           },
           get: function() {
             var ssodata = storage.getItem('auth0.ssodata');
@@ -9437,11 +9440,12 @@
         };
 
         /***/
-      } /* 48 */ /* 46 */ /* 47 */,
+      },
       ,
       ,
       ,
-      /* 45 */ /***/ function(module, exports, __webpack_require__) {
+      /* 45 */ /* 46 */ /* 47 */ /* 48 */
+      /***/ function(module, exports, __webpack_require__) {
         var urljoin = __webpack_require__(3);
 
         var objectHelper = __webpack_require__(1);
@@ -10127,7 +10131,10 @@
           try {
             // some browsers throw an error when trying to access localStorage
             // when localStorage is disabled.
-            //this.storage = windowHandler.getWindow().localStorage;
+            var localStorage = windowHandler.getWindow().localStorage;
+            if (localStorage) {
+              this.storage = localStorage;
+            }
           } catch (e) {
             this.warn.warning(e);
             this.warn.warning("Can't use localStorage. Using CookieStorage instead.");

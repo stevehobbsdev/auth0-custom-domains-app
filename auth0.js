@@ -2232,7 +2232,7 @@
                 .merge(options)
                 .with({ loginTicket: data.body.login_ticket });
               var key = createKey(_this.baseOptions.rootUrl, data.body.co_id);
-              storage.setItem(key, data.body.co_verifier, { expires: 10 * 1000 });
+              storage.setItem(key, data.body.co_verifier, { expires: 10 / 1440 / 60 });
               if (popupMode) {
                 _this.webMessageHandler.run(
                   authorizeOptions,
@@ -10127,7 +10127,7 @@
           try {
             // some browsers throw an error when trying to access localStorage
             // when localStorage is disabled.
-            this.storage = windowHandler.getWindow().localStorage;
+            //this.storage = windowHandler.getWindow().localStorage;
           } catch (e) {
             this.warn.warning(e);
             this.warn.warning("Can't use localStorage. Using CookieStorage instead.");

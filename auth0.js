@@ -9685,7 +9685,11 @@
         }
 
         function erase(name) {
+          var oldCookie = windowHandler.getDocument().cookie;
           create(name, '', 0);
+          if (oldCookie === windowHandler.getDocument().cookie) {
+            throw new Error('didnt change');
+          }
         }
 
         module.exports = {

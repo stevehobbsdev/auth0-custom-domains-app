@@ -392,7 +392,6 @@
           options.ignoreCasing = options.ignoreCasing ? options.ignoreCasing : false;
 
           return function(err, data) {
-            debugger;
             var errObj;
 
             if (!err && !data) {
@@ -9686,7 +9685,7 @@
         }
 
         function erase(name) {
-          create(name, '', -1);
+          create(name, '', 0);
         }
 
         module.exports = {

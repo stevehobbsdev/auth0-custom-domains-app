@@ -54,49 +54,6 @@
       },
       /* 1 */
       /***/ function(module, exports, __webpack_require__) {
-        /* WEBPACK VAR INJECTION */ (function(global) {
-          var objectHelper = __webpack_require__(2);
-
-          function redirect(url) {
-            global.window.location = url;
-          }
-
-          function getDocument() {
-            return global.window.document;
-          }
-
-          function getWindow() {
-            return global.window;
-          }
-
-          function getOrigin() {
-            var location = global.window.location;
-            var origin = location.origin;
-            if (!origin) {
-              origin = objectHelper.getOriginFromUrl(location.href);
-            }
-            return origin;
-          }
-
-          module.exports = {
-            redirect: redirect,
-            getDocument: getDocument,
-            getWindow: getWindow,
-            getOrigin: getOrigin
-          };
-
-          /* WEBPACK VAR INJECTION */
-        }.call(
-          exports,
-          (function() {
-            return this;
-          })()
-        ));
-
-        /***/
-      },
-      /* 2 */
-      /***/ function(module, exports, __webpack_require__) {
         /* eslint-disable no-param-reassign */
         /* eslint-disable no-restricted-syntax */
         /* eslint-disable guard-for-in */
@@ -260,6 +217,49 @@
 
         /***/
       },
+      /* 2 */
+      /***/ function(module, exports, __webpack_require__) {
+        /* WEBPACK VAR INJECTION */ (function(global) {
+          var objectHelper = __webpack_require__(1);
+
+          function redirect(url) {
+            global.window.location = url;
+          }
+
+          function getDocument() {
+            return global.window.document;
+          }
+
+          function getWindow() {
+            return global.window;
+          }
+
+          function getOrigin() {
+            var location = global.window.location;
+            var origin = location.origin;
+            if (!origin) {
+              origin = objectHelper.getOriginFromUrl(location.href);
+            }
+            return origin;
+          }
+
+          module.exports = {
+            redirect: redirect,
+            getDocument: getDocument,
+            getWindow: getWindow,
+            getOrigin: getOrigin
+          };
+
+          /* WEBPACK VAR INJECTION */
+        }.call(
+          exports,
+          (function() {
+            return this;
+          })()
+        ));
+
+        /***/
+      },
       /* 3 */
       /***/ function(module, exports, __webpack_require__) {
         var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
@@ -384,8 +384,8 @@
       },
       /* 5 */
       /***/ function(module, exports, __webpack_require__) {
-        var error = __webpack_require__(27);
-        var objectHelper = __webpack_require__(2);
+        var error = __webpack_require__(26);
+        var objectHelper = __webpack_require__(1);
 
         function wrapCallback(cb, options) {
           options = options || {};
@@ -731,7 +731,7 @@
       /***/ function(module, exports, __webpack_require__) {
         /* eslint-disable no-param-reassign */
         var request = __webpack_require__(22);
-        var base64Url = __webpack_require__(26);
+        var base64Url = __webpack_require__(50);
         var version = __webpack_require__(11);
 
         // ------------------------------------------------ RequestWrapper
@@ -2122,9 +2122,9 @@
           removeItem: function(key) {
             return getStorage().removeItem(key);
           },
-          setItem: function(key, value) {
+          setItem: function(key, value, options) {
             var json = JSON.stringify(value);
-            return getStorage().setItem(key, json);
+            return getStorage().setItem(key, json, options);
           },
           reload: function() {
             getStorage(true);
@@ -2137,10 +2137,10 @@
       /***/ function(module, exports, __webpack_require__) {
         var urljoin = __webpack_require__(3);
 
-        var windowHelper = __webpack_require__(1);
-        var objectHelper = __webpack_require__(2);
+        var windowHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
         var RequestBuilder = __webpack_require__(10);
-        var WebMessageHandler = __webpack_require__(31);
+        var WebMessageHandler = __webpack_require__(30);
         var responseHandler = __webpack_require__(5);
         var storage = __webpack_require__(16);
 
@@ -2232,7 +2232,7 @@
                 .merge(options)
                 .with({ loginTicket: data.body.login_ticket });
               var key = createKey(_this.baseOptions.rootUrl, data.body.co_id);
-              storage.setItem(key, data.body.co_verifier);
+              storage.setItem(key, data.body.co_verifier, { expires: 10 * 1000 });
               if (popupMode) {
                 _this.webMessageHandler.run(
                   authorizeOptions,
@@ -2816,7 +2816,7 @@
           root = this;
         }
 
-        var Emitter = __webpack_require__(32);
+        var Emitter = __webpack_require__(31);
         var RequestBase = __webpack_require__(42);
         var isObject = __webpack_require__(23);
         var ResponseBase = __webpack_require__(43);
@@ -4122,10 +4122,10 @@
         var qs = __webpack_require__(6);
 
         var RequestBuilder = __webpack_require__(10);
-        var objectHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
         var assert = __webpack_require__(4);
-        var ssodata = __webpack_require__(29);
-        var windowHelper = __webpack_require__(1);
+        var ssodata = __webpack_require__(28);
+        var windowHelper = __webpack_require__(2);
         var responseHandler = __webpack_require__(5);
         var parametersWhitelist = __webpack_require__(51);
         var Warn = __webpack_require__(7);
@@ -4521,7 +4521,7 @@
           /* istanbul ignore if  */
           if (!this.auth0) {
             // we can't import this in the constructor because it'd be a ciclic dependency
-            var WebAuth = __webpack_require__(30); // eslint-disable-line
+            var WebAuth = __webpack_require__(29); // eslint-disable-line
             this.auth0 = new WebAuth(this.baseOptions);
           }
           var isHostedLoginPage =
@@ -4674,59 +4674,6 @@
         /***/
       },
       /* 26 */
-      /***/ function(module, exports, __webpack_require__) {
-        var base64 = __webpack_require__(19);
-
-        function padding(str) {
-          var mod = str.length % 4;
-          var pad = 4 - mod;
-
-          if (mod === 0) {
-            return str;
-          }
-
-          return str + new Array(1 + pad).join('=');
-        }
-
-        function stringToByteArray(str) {
-          var arr = new Array(str.length);
-          for (var a = 0; a < str.length; a++) {
-            arr[a] = str.charCodeAt(a);
-          }
-          return arr;
-        }
-
-        function byteArrayToString(array) {
-          var result = '';
-          for (var i = 0; i < array.length; i++) {
-            result += String.fromCharCode(array[i]);
-          }
-          return result;
-        }
-
-        function encode(str) {
-          return base64
-            .fromByteArray(stringToByteArray(str))
-            .replace(/\+/g, '-') // Convert '+' to '-'
-            .replace(/\//g, '_'); // Convert '/' to '_'
-        }
-
-        function decode(str) {
-          str = padding(str)
-            .replace(/-/g, '+') // Convert '-' to '+'
-            .replace(/_/g, '/'); // Convert '_' to '/'
-
-          return byteArrayToString(base64.toByteArray(str));
-        }
-
-        module.exports = {
-          encode: encode,
-          decode: decode
-        };
-
-        /***/
-      },
-      /* 27 */
       /***/ function(module, exports) {
         function buildResponse(error, description) {
           return {
@@ -4746,9 +4693,9 @@
 
         /***/
       },
-      /* 28 */
+      /* 27 */
       /***/ function(module, exports, __webpack_require__) {
-        var windowHelper = __webpack_require__(1);
+        var windowHelper = __webpack_require__(2);
 
         function IframeHandler(options) {
           this.url = options.url;
@@ -4849,7 +4796,7 @@
 
         /***/
       },
-      /* 29 */
+      /* 28 */
       /***/ function(module, exports, __webpack_require__) {
         var storage = __webpack_require__(16);
 
@@ -4872,24 +4819,24 @@
 
         /***/
       },
-      /* 30 */
+      /* 29 */
       /***/ function(module, exports, __webpack_require__) {
-        var IdTokenVerifier = __webpack_require__(39);
+        var IdTokenVerifier = __webpack_require__(38);
 
         var assert = __webpack_require__(4);
-        var error = __webpack_require__(27);
+        var error = __webpack_require__(26);
         var qs = __webpack_require__(6);
         var PluginHandler = __webpack_require__(52);
-        var windowHelper = __webpack_require__(1);
-        var objectHelper = __webpack_require__(2);
-        var ssodata = __webpack_require__(29);
+        var windowHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
+        var ssodata = __webpack_require__(28);
         var TransactionManager = __webpack_require__(18);
         var Authentication = __webpack_require__(25);
         var Redirect = __webpack_require__(63);
         var Popup = __webpack_require__(62);
         var SilentAuthenticationHandler = __webpack_require__(64);
         var CrossOriginAuthentication = __webpack_require__(17);
-        var WebMessageHandler = __webpack_require__(31);
+        var WebMessageHandler = __webpack_require__(30);
         var HostedPages = __webpack_require__(61);
 
         /**
@@ -5658,11 +5605,11 @@
 
         /***/
       },
-      /* 31 */
+      /* 30 */
       /***/ function(module, exports, __webpack_require__) {
-        var IframeHandler = __webpack_require__(28);
-        var objectHelper = __webpack_require__(2);
-        var windowHelper = __webpack_require__(1);
+        var IframeHandler = __webpack_require__(27);
+        var objectHelper = __webpack_require__(1);
+        var windowHelper = __webpack_require__(2);
         var Warn = __webpack_require__(7);
 
         function runWebMessageFlow(authorizeUrl, options, callback) {
@@ -5747,7 +5694,7 @@
 
         /***/
       },
-      /* 32 */
+      /* 31 */
       /***/ function(module, exports, __webpack_require__) {
         /**
          * Expose `Emitter`.
@@ -5912,7 +5859,7 @@
 
         /***/
       },
-      /* 33 */
+      /* 32 */
       /***/ function(module, exports, __webpack_require__) {
         (function(root, factory) {
           if (true) {
@@ -6046,7 +5993,7 @@
 
         /***/
       },
-      /* 34 */
+      /* 33 */
       /***/ function(module, exports, __webpack_require__) {
         (function(root, factory) {
           if (true) {
@@ -6065,7 +6012,7 @@
 
         /***/
       },
-      /* 35 */
+      /* 34 */
       /***/ function(module, exports) {
         function DummyCache() {}
 
@@ -6083,7 +6030,7 @@
 
         /***/
       },
-      /* 36 */
+      /* 35 */
       /***/ function(module, exports) {
         function ConfigurationError(message) {
           this.name = 'ConfigurationError';
@@ -6104,7 +6051,7 @@
 
         /***/
       },
-      /* 37 */
+      /* 36 */
       /***/ function(module, exports, __webpack_require__) {
         var urljoin = __webpack_require__(3);
         var base64 = __webpack_require__(21);
@@ -6151,7 +6098,7 @@
 
         /***/
       },
-      /* 38 */
+      /* 37 */
       /***/ function(module, exports, __webpack_require__) {
         /*
 	Based on the work of Tom Wu
@@ -6232,17 +6179,17 @@
 
         /***/
       },
-      /* 39 */
+      /* 38 */
       /***/ function(module, exports, __webpack_require__) {
         var sha256 = __webpack_require__(20);
-        var cryptoBase64 = __webpack_require__(33);
-        var cryptoHex = __webpack_require__(34);
+        var cryptoBase64 = __webpack_require__(32);
+        var cryptoHex = __webpack_require__(33);
 
-        var RSAVerifier = __webpack_require__(38);
+        var RSAVerifier = __webpack_require__(37);
         var base64 = __webpack_require__(21);
-        var jwks = __webpack_require__(37);
-        var error = __webpack_require__(36);
-        var DummyCache = __webpack_require__(35);
+        var jwks = __webpack_require__(36);
+        var error = __webpack_require__(35);
+        var DummyCache = __webpack_require__(34);
         var supportedAlgs = ['RS256'];
 
         /**
@@ -6548,6 +6495,196 @@
         };
 
         module.exports = IdTokenVerifier;
+
+        /***/
+      },
+      /* 39 */
+      /***/ function(module, exports, __webpack_require__) {
+        var __WEBPACK_AMD_DEFINE_FACTORY__,
+          __WEBPACK_AMD_DEFINE_RESULT__; /*!
+	 * JavaScript Cookie v2.2.0
+	 * https://github.com/js-cookie/js-cookie
+	 *
+	 * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+	 * Released under the MIT license
+	 */
+        (function(factory) {
+          var registeredInModuleLoader = false;
+          if (true) {
+            !((__WEBPACK_AMD_DEFINE_FACTORY__ = factory),
+            (__WEBPACK_AMD_DEFINE_RESULT__ =
+              typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function'
+                ? __WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)
+                : __WEBPACK_AMD_DEFINE_FACTORY__),
+            __WEBPACK_AMD_DEFINE_RESULT__ !== undefined &&
+              (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+            registeredInModuleLoader = true;
+          }
+          if (true) {
+            module.exports = factory();
+            registeredInModuleLoader = true;
+          }
+          if (!registeredInModuleLoader) {
+            var OldCookies = window.Cookies;
+            var api = (window.Cookies = factory());
+            api.noConflict = function() {
+              window.Cookies = OldCookies;
+              return api;
+            };
+          }
+        })(function() {
+          function extend() {
+            var i = 0;
+            var result = {};
+            for (; i < arguments.length; i++) {
+              var attributes = arguments[i];
+              for (var key in attributes) {
+                result[key] = attributes[key];
+              }
+            }
+            return result;
+          }
+
+          function init(converter) {
+            function api(key, value, attributes) {
+              var result;
+              if (typeof document === 'undefined') {
+                return;
+              }
+
+              // Write
+
+              if (arguments.length > 1) {
+                attributes = extend(
+                  {
+                    path: '/'
+                  },
+                  api.defaults,
+                  attributes
+                );
+
+                if (typeof attributes.expires === 'number') {
+                  var expires = new Date();
+                  expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5);
+                  attributes.expires = expires;
+                }
+
+                // We're using "expires" because "max-age" is not supported by IE
+                attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
+
+                try {
+                  result = JSON.stringify(value);
+                  if (/^[\{\[]/.test(result)) {
+                    value = result;
+                  }
+                } catch (e) {}
+
+                if (!converter.write) {
+                  value = encodeURIComponent(String(value)).replace(
+                    /%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,
+                    decodeURIComponent
+                  );
+                } else {
+                  value = converter.write(value, key);
+                }
+
+                key = encodeURIComponent(String(key));
+                key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+                key = key.replace(/[\(\)]/g, escape);
+
+                var stringifiedAttributes = '';
+
+                for (var attributeName in attributes) {
+                  if (!attributes[attributeName]) {
+                    continue;
+                  }
+                  stringifiedAttributes += '; ' + attributeName;
+                  if (attributes[attributeName] === true) {
+                    continue;
+                  }
+                  stringifiedAttributes += '=' + attributes[attributeName];
+                }
+                return (document.cookie = key + '=' + value + stringifiedAttributes);
+              }
+
+              // Read
+
+              if (!key) {
+                result = {};
+              }
+
+              // To prevent the for loop in the first place assign an empty array
+              // in case there are no cookies at all. Also prevents odd result when
+              // calling "get()"
+              var cookies = document.cookie ? document.cookie.split('; ') : [];
+              var rdecode = /(%[0-9A-Z]{2})+/g;
+              var i = 0;
+
+              for (; i < cookies.length; i++) {
+                var parts = cookies[i].split('=');
+                var cookie = parts.slice(1).join('=');
+
+                if (!this.json && cookie.charAt(0) === '"') {
+                  cookie = cookie.slice(1, -1);
+                }
+
+                try {
+                  var name = parts[0].replace(rdecode, decodeURIComponent);
+                  cookie = converter.read
+                    ? converter.read(cookie, name)
+                    : converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
+
+                  if (this.json) {
+                    try {
+                      cookie = JSON.parse(cookie);
+                    } catch (e) {}
+                  }
+
+                  if (key === name) {
+                    result = cookie;
+                    break;
+                  }
+
+                  if (!key) {
+                    result[name] = cookie;
+                  }
+                } catch (e) {}
+              }
+
+              return result;
+            }
+
+            api.set = api;
+            api.get = function(key) {
+              return api.call(api, key);
+            };
+            api.getJSON = function() {
+              return api.apply(
+                {
+                  json: true
+                },
+                [].slice.call(arguments)
+              );
+            };
+            api.defaults = {};
+
+            api.remove = function(key, attributes) {
+              api(
+                key,
+                '',
+                extend(attributes, {
+                  expires: -1
+                })
+              );
+            };
+
+            api.withConverter = init;
+
+            return api;
+          }
+
+          return init(function() {});
+        });
 
         /***/
       },
@@ -9307,7 +9444,7 @@
       /* 45 */ /***/ function(module, exports, __webpack_require__) {
         var urljoin = __webpack_require__(3);
 
-        var objectHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
         var assert = __webpack_require__(4);
         var responseHandler = __webpack_require__(5);
 
@@ -9423,7 +9560,7 @@
       /***/ function(module, exports, __webpack_require__) {
         var urljoin = __webpack_require__(3);
 
-        var objectHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
         var assert = __webpack_require__(4);
         var qs = __webpack_require__(6);
         var responseHandler = __webpack_require__(5);
@@ -9629,80 +9766,60 @@
       },
       /* 50 */
       /***/ function(module, exports, __webpack_require__) {
-        var windowHandler = __webpack_require__(1);
-        var base64Url = __webpack_require__(26);
+        var base64 = __webpack_require__(19);
 
-        function create(name, value, days) {
-          var date;
-          var expires;
+        function padding(str) {
+          var mod = str.length % 4;
+          var pad = 4 - mod;
 
-          if (
-            windowHandler.getDocument().cookie === undefined ||
-            windowHandler.getDocument().cookie === null
-          ) {
-            throw new Error('cookie storage not available');
+          if (mod === 0) {
+            return str;
           }
 
-          if (days) {
-            var timeToExpire = days * 24 * 60 * 60 * 1000;
-            date = new Date();
-            date.setTime(date.getTime() + timeToExpire);
-            expires = '; expires=' + date.toGMTString();
-          } else {
-            expires = '';
-          }
-
-          windowHandler.getDocument().cookie =
-            name + '=' + base64Url.encode(value) + expires + '; path=/';
+          return str + new Array(1 + pad).join('=');
         }
 
-        function read(name) {
-          var i;
-          var cookie;
-          var cookies;
-          var nameEQ = name + '=';
-
-          if (
-            windowHandler.getDocument().cookie === undefined ||
-            windowHandler.getDocument().cookie === null
-          ) {
-            throw new Error('cookie storage not available');
+        function stringToByteArray(str) {
+          var arr = new Array(str.length);
+          for (var a = 0; a < str.length; a++) {
+            arr[a] = str.charCodeAt(a);
           }
-
-          cookies = windowHandler.getDocument().cookie.split(';');
-
-          for (i = 0; i < cookies.length; i++) {
-            cookie = cookies[i];
-            while (cookie.charAt(0) === ' ') {
-              cookie = cookie.substring(1, cookie.length);
-            }
-            if (cookie.indexOf(nameEQ) === 0) {
-              return base64Url.decode(cookie.substring(nameEQ.length, cookie.length));
-            }
-          }
-
-          return null;
+          return arr;
         }
 
-        function erase(name) {
-          var oldCookie = windowHandler.getDocument().cookie;
-          create(name, '', 0);
-          if (oldCookie === windowHandler.getDocument().cookie) {
-            throw new Error('didnt change');
+        function byteArrayToString(array) {
+          var result = '';
+          for (var i = 0; i < array.length; i++) {
+            result += String.fromCharCode(array[i]);
           }
+          return result;
+        }
+
+        function encode(str) {
+          return base64
+            .fromByteArray(stringToByteArray(str))
+            .replace(/\+/g, '-') // Convert '+' to '-'
+            .replace(/\//g, '_'); // Convert '/' to '_'
+        }
+
+        function decode(str) {
+          str = padding(str)
+            .replace(/-/g, '+') // Convert '-' to '+'
+            .replace(/_/g, '/'); // Convert '_' to '/'
+
+          return byteArrayToString(base64.toByteArray(str));
         }
 
         module.exports = {
-          create: create,
-          read: read,
-          erase: erase
+          encode: encode,
+          decode: decode
         };
 
         /***/
       },
       /* 51 */
       /***/ function(module, exports, __webpack_require__) {
-        var objectHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
 
         var tokenParams = [
           // auth0
@@ -9839,8 +9956,8 @@
         /* eslint-disable guard-for-in */
         var WinChan = __webpack_require__(24);
 
-        var windowHandler = __webpack_require__(1);
-        var objectHelper = __webpack_require__(2);
+        var windowHandler = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
         var qs = __webpack_require__(6);
 
         function PopupHandler() {
@@ -9931,7 +10048,7 @@
       },
       /* 54 */
       /***/ function(module, exports, __webpack_require__) {
-        var windowHelper = __webpack_require__(1);
+        var windowHelper = __webpack_require__(2);
 
         function randomString(length) {
           // eslint-disable-next-line
@@ -9961,20 +10078,20 @@
       },
       /* 55 */
       /***/ function(module, exports, __webpack_require__) {
-        var cookies = __webpack_require__(50);
+        var Cookie = __webpack_require__(39);
 
         function CookieStorage() {}
 
         CookieStorage.prototype.getItem = function(key) {
-          return cookies.read(key);
+          return Cookie.get(key);
         };
 
         CookieStorage.prototype.removeItem = function(key) {
-          cookies.erase(key);
+          Cookie.remove(key);
         };
 
-        CookieStorage.prototype.setItem = function(key, value) {
-          cookies.create(key, value, 1);
+        CookieStorage.prototype.setItem = function(key, value, options) {
+          Cookie.set(key, value, options);
         };
 
         module.exports = CookieStorage;
@@ -9999,7 +10116,7 @@
       },
       /* 57 */
       /***/ function(module, exports, __webpack_require__) {
-        var windowHandler = __webpack_require__(1);
+        var windowHandler = __webpack_require__(2);
         var DummyStorage = __webpack_require__(56);
         var CookieStorage = __webpack_require__(55);
         var Warn = __webpack_require__(7);
@@ -10050,13 +10167,13 @@
           }
         };
 
-        StorageHandler.prototype.setItem = function(key, value) {
+        StorageHandler.prototype.setItem = function(key, value, options) {
           try {
-            return this.storage.setItem(key, value);
+            return this.storage.setItem(key, value, options);
           } catch (e) {
             this.warn.warning(e);
             this.failover();
-            return this.setItem(key, value);
+            return this.setItem(key, value, options);
           }
         };
 
@@ -10084,7 +10201,7 @@
       /***/ function(module, exports, __webpack_require__) {
         var Authentication = __webpack_require__(25);
         var Management = __webpack_require__(60);
-        var WebAuth = __webpack_require__(30);
+        var WebAuth = __webpack_require__(29);
         var version = __webpack_require__(11);
 
         module.exports = {
@@ -10234,8 +10351,8 @@
         var UsernamePassword = __webpack_require__(65);
         var RequestBuilder = __webpack_require__(10);
         var responseHandler = __webpack_require__(5);
-        var objectHelper = __webpack_require__(2);
-        var windowHelper = __webpack_require__(1);
+        var objectHelper = __webpack_require__(1);
+        var windowHelper = __webpack_require__(2);
         var Warn = __webpack_require__(7);
         var assert = __webpack_require__(4);
 
@@ -10378,8 +10495,8 @@
         var assert = __webpack_require__(4);
         var responseHandler = __webpack_require__(5);
         var PopupHandler = __webpack_require__(53);
-        var objectHelper = __webpack_require__(2);
-        var windowHelper = __webpack_require__(1);
+        var objectHelper = __webpack_require__(1);
+        var windowHelper = __webpack_require__(2);
         var Warn = __webpack_require__(7);
         var TransactionManager = __webpack_require__(18);
         var CrossOriginAuthentication = __webpack_require__(17);
@@ -10740,8 +10857,8 @@
       },
       /* 64 */
       /***/ function(module, exports, __webpack_require__) {
-        var IframeHandler = __webpack_require__(28);
-        var windowHelper = __webpack_require__(1);
+        var IframeHandler = __webpack_require__(27);
+        var windowHelper = __webpack_require__(2);
 
         function SilentAuthenticationHandler(options) {
           this.authenticationUrl = options.authenticationUrl;
@@ -10847,10 +10964,10 @@
       /***/ function(module, exports, __webpack_require__) {
         var urljoin = __webpack_require__(3);
 
-        var objectHelper = __webpack_require__(2);
+        var objectHelper = __webpack_require__(1);
         var RequestBuilder = __webpack_require__(10);
         var responseHandler = __webpack_require__(5);
-        var windowHelper = __webpack_require__(1);
+        var windowHelper = __webpack_require__(2);
         var TransactionManager = __webpack_require__(18);
 
         function UsernamePassword(options) {

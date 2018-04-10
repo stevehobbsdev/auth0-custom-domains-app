@@ -116,6 +116,17 @@ $(function() {
     //window.localStorage.lastUsed = 'a0js';
     auth0.authorize();
   });
+
+  $('#btn-a0js').on('click', function() {
+    clearLogs();
+    var username = window.prompt('username', 'johnfoo@gmail.com');
+    var password = window.prompt('password', '1234');
+    //window.localStorage.lastUsed = 'a0js';
+    auth0.login({
+      username: username,
+      password: password
+    });
+  });
   //make sure we initialize Lock so we can parse the hash
   //var lastUsed = window.localStorage.lastUsed;
   // if (!lastUsed) {

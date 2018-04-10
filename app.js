@@ -124,7 +124,8 @@ $(function() {
     //window.localStorage.lastUsed = 'a0js';
     auth0.login({
       username: username,
-      password: password
+      password: password,
+      realm: 'acme'
     });
   });
   //make sure we initialize Lock so we can parse the hash

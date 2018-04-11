@@ -6,11 +6,11 @@ Prism.plugins.NormalizeWhitespace.setDefaults({
   'right-trim': true
 });
 var logs = [];
-// if (window.localStorage.auth0logs) {
-//   logs = JSON.parse(window.localStorage.auth0logs);
-// }
+if (window.localStorage.auth0logs) {
+  logs = JSON.parse(window.localStorage.auth0logs);
+}
 function printLogs() {
-  //window.localStorage.auth0logs = JSON.stringify(logs);
+  window.localStorage.auth0logs = JSON.stringify(logs);
   var code = '';
   logs.forEach(function(l) {
     code += '\r\n' + JSON.stringify(l, null, 1);
@@ -20,7 +20,7 @@ function printLogs() {
 }
 function clearLogs() {
   logs = [];
-  //window.localStorage.removeItem('auth0logs');
+  window.localStorage.removeItem('auth0logs');
   printLogs();
 }
 function subscribeToEvents(instance) {
@@ -80,13 +80,13 @@ var auth0 = new auth0.WebAuth({
 });
 function initLock() {
   var lock = new Auth0Lock(clientId, domain, defaultOptions);
-  //window.localStorage.lastUsed = 'lock';
+  window.localStorage.lastUsed = 'lock';
   subscribeToEvents(lock);
   return lock;
 }
 function initPasswordless() {
   var lockPasswordless = new Auth0LockPasswordless(clientId, domain, defaultOptions);
-  //window.localStorage.lastUsed = 'passwordless';
+  window.localStorage.lastUsed = 'passwordless';
   subscribeToEvents(lockPasswordless);
   return lockPasswordless;
 }
@@ -113,7 +113,7 @@ $(function() {
   });
   $('#btn-ulp').on('click', function() {
     clearLogs();
-    //window.localStorage.lastUsed = 'a0js';
+    window.localStorage.lastUsed = 'a0js';
     auth0.authorize();
   });
 
@@ -121,7 +121,7 @@ $(function() {
     clearLogs();
     var username = window.prompt('username', 'johnfoo@gmail.com');
     var password = window.prompt('password', '1234');
-    //window.localStorage.lastUsed = 'a0js';
+    window.localStorage.lastUsed = 'a0js';
     auth0.login({
       username: username,
       password: password,
@@ -129,10 +129,10 @@ $(function() {
     });
   });
   //make sure we initialize Lock so we can parse the hash
-  //var lastUsed = window.localStorage.lastUsed;
-  // if (!lastUsed) {
-  //   return;
-  // }
+  var lastUsed = window.localStorage.lastUsed;
+  if (!lastUsed) {
+    return;
+  }
   return;
   switch (lastUsed) {
     case 'lock':

@@ -117,8 +117,7 @@ $(function() {
     auth0.authorize();
   });
 
-  $('#a0js-form').on('submit', function(e) {
-    e.preventDefault();
+  $('#btn-submit').on('click', function(e) {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     auth0.login({

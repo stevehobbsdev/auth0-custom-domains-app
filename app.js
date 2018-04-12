@@ -117,12 +117,12 @@ $(function() {
     auth0.authorize();
   });
 
-  $('#btn-submit').on('click', function(e) {
+  $('#a0js-form').on('submit', function(e) {
     e.preventDefault();
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     auth0.login({
-      username: $('#username').val(),
+      username: $('#email').val(),
       password: $('#password').val(),
       realm: 'acme'
     });

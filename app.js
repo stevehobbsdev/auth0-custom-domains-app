@@ -117,14 +117,13 @@ $(function() {
     auth0.authorize();
   });
 
-  $('#btn-a0js').on('click', function() {
+  $('#a0js-form').on('submit', function(e) {
+    e.preventDefault();
     clearLogs();
-    var username = window.prompt('username', 'johnfoo@gmail.com');
-    var password = window.prompt('password', '1234');
     window.localStorage.lastUsed = 'a0js';
     auth0.login({
-      username: username,
-      password: password,
+      username: $('#username').val(),
+      password: $('#password').val(),
       realm: 'acme'
     });
   });

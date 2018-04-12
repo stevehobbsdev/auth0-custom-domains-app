@@ -133,7 +133,6 @@ $(function() {
   if (!lastUsed) {
     return;
   }
-  return;
   switch (lastUsed) {
     case 'lock':
       initLock();

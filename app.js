@@ -60,6 +60,7 @@ function subscribeToEvents(instance) {
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
 var domain = 'auth.brucke.club';
 var defaultOptions = {
+  allowAutocomplete: true,
   configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,
   prefill: {
@@ -119,6 +120,7 @@ $(function() {
 
   $('#a0js-form').on('submit', function(e) {
     e.preventDefault();
+    window.external.AutoCompleteSaveForm
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     auth0.login({

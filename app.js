@@ -118,6 +118,7 @@ $(function() {
   });
 
   $('#btn-submit').on('click', function(e) {
+    e.preventDefault();
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     auth0.login({

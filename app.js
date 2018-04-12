@@ -143,6 +143,7 @@ $(function() {
       auth0.parseHash(function(err, authResult) {
         logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
         printLogs();
+        window.location.hash = '';
       });
       break;
     default:

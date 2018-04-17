@@ -60,17 +60,10 @@ function subscribeToEvents(instance) {
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
 var domain = 'auth.brucke.club';
 var defaultOptions = {
-  allowAutocomplete: true,
   configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'
-  },
-  auth: {
-    audience: 'https://brucke.auth0.com/api/v2/',
-    params: {
-      scope: 'openid email'
-    }
   }
 };
 var auth0 = new auth0.WebAuth({
@@ -120,7 +113,7 @@ $(function() {
 
   $('#a0js-form').on('submit', function(e) {
     e.preventDefault();
-    window.external.AutoCompleteSaveForm
+    window.external.AutoCompleteSaveForm;
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     auth0.login({

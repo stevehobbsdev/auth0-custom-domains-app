@@ -67,6 +67,12 @@ var defaultOptions = {
   }
 };
 var auth0 = new auth0.WebAuth({
+  domain: domain,
+  redirectUri: 'https://brucke.club/',
+  clientID: clientId,
+  responseType: 'token'
+});
+var auth0WithoutCustomDomains = new auth0.WebAuth({
   domain: 'brucke.auth0.com',
   redirectUri: 'https://brucke.club/',
   clientID: clientId,
@@ -109,6 +115,11 @@ $(function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     auth0.authorize();
+  });
+  $('#btn-ulp-no-cname').on('click', function() {
+    clearLogs();
+    window.localStorage.lastUsed = 'a0js';
+    auth0WithoutCustomDomains.authorize();
   });
 
   $('#a0js-form').on('submit', function(e) {

@@ -66,13 +66,13 @@ var defaultOptions = {
     email: 'johnfoo@gmail.com'
   }
 };
-var auth0 = new auth0.WebAuth({
+var webAuth = new auth0.WebAuth({
   domain: domain,
   redirectUri: 'https://brucke.club/',
   clientID: clientId,
   responseType: 'token'
 });
-var auth0WithoutCustomDomains = new auth0.WebAuth({
+var webAuthWithoutCustomDomains = new auth0.WebAuth({
   domain: 'brucke.auth0.com',
   redirectUri: 'https://brucke.club/',
   clientID: clientId,
@@ -114,12 +114,12 @@ $(function() {
   $('#btn-ulp').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    auth0.authorize();
+    webAuth.authorize();
   });
   $('#btn-ulp-no-cname').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    auth0WithoutCustomDomains.authorize();
+    webAuthWithoutCustomDomains.authorize();
   });
 
   $('#a0js-form').on('submit', function(e) {
@@ -127,7 +127,7 @@ $(function() {
     window.external.AutoCompleteSaveForm;
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    auth0.login({
+    webAuth.login({
       username: $('#email').val(),
       password: $('#password').val(),
       realm: 'acme'
@@ -146,7 +146,7 @@ $(function() {
       initPasswordless();
       break;
     case 'a0js':
-      auth0.parseHash(function(err, authResult) {
+      webAuth.parseHash(function(err, authResult) {
         logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
         printLogs();
         window.location.hash = '';

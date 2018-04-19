@@ -67,7 +67,7 @@ var defaultOptions = {
   }
 };
 var auth0 = new auth0.WebAuth({
-  domain: domain,
+  domain: 'brucke.auth0.com',
   redirectUri: 'https://brucke.club/',
   clientID: clientId,
   responseType: 'token'

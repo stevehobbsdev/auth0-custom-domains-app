@@ -64,7 +64,9 @@ var defaultOptions = {
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'
-  }
+  },
+  rememberLastLogin: false,
+  allowedConnections: ['google-oauth2']
 };
 var webAuth = new auth0.WebAuth({
   domain: domain,

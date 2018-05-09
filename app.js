@@ -124,7 +124,6 @@ $(function() {
 
   $('#a0js-form').on('submit', function(e) {
     e.preventDefault();
-    window.external.AutoCompleteSaveForm;
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     webAuth.login({

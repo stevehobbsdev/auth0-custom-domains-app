@@ -58,7 +58,7 @@ function subscribeToEvents(instance) {
 }
 
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
-var domain = 'auth.brucke.club';
+var domain = 'brucke.auth0.com';
 var defaultOptions = {
   configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,

@@ -114,22 +114,22 @@ $(function() {
   $('#btn-ulp').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuth.authorize();
+    webAuth.authorize({});
   });
   $('#btn-ulp-no-cname').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuthWithoutCustomDomains.authorize();
+    webAuthWithoutCustomDomains.authorize({});
   });
   $('#btn-ulp-popup').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuth.popup.authorize();
+    webAuth.popup.authorize({});
   });
   $('#btn-ulp-no-cname-popup').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuthWithoutCustomDomains.popup.authorize();
+    webAuthWithoutCustomDomains.popup.authorize({});
   });
 
   $('#a0js-form').on('submit', function(e) {

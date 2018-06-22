@@ -58,7 +58,7 @@ function subscribeToEvents(instance) {
 }
 
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
-var domain = 'auth.brucke.club';
+var domain = 'brucke.auth0.com';
 var defaultOptions = {
   configurationBaseUrl: 'https://cdn.auth0.com/',
   allowShowPassword: true,
@@ -85,8 +85,7 @@ function initLock() {
   return lock;
 }
 function initPasswordless() {
-  var options = Object.assign({}, defaultOptions, {allowedConnections: ['sms']});
-  var lockPasswordless = new Auth0LockPasswordless(clientId, domain, options);
+  var lockPasswordless = new Auth0LockPasswordless(clientId, domain, defaultOptions);
   window.localStorage.lastUsed = 'passwordless';
   subscribeToEvents(lockPasswordless);
   return lockPasswordless;

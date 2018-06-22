@@ -58,9 +58,10 @@ function subscribeToEvents(instance) {
 }
 
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
-var domain = 'brucke.auth0.com';
+var domain = 'auth.brucke.club';
 var defaultOptions = {
   configurationBaseUrl: 'https://cdn.auth0.com/',
+  passwordlessMethod: 'sms',
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'

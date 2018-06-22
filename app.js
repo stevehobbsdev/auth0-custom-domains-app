@@ -61,7 +61,6 @@ var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
 var domain = 'auth.brucke.club';
 var defaultOptions = {
   configurationBaseUrl: 'https://cdn.auth0.com/',
-  passwordlessMethod: 'sms',
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'
@@ -86,7 +85,8 @@ function initLock() {
   return lock;
 }
 function initPasswordless() {
-  var lockPasswordless = new Auth0LockPasswordless(clientId, domain, defaultOptions);
+  var options = Object.assign({}, defaultOptions, {allowedConnections: ['sms']});
+  var lockPasswordless = new Auth0LockPasswordless(clientId, domain, options);
   window.localStorage.lastUsed = 'passwordless';
   subscribeToEvents(lockPasswordless);
   return lockPasswordless;

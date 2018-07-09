@@ -124,7 +124,7 @@ $(function() {
   $('#btn-ulp-popup').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuth.popup.authorize({});
+    webAuth.popup.authorize({scope: 'offline_access'});
   });
   $('#btn-ulp-no-cname-popup').on('click', function() {
     clearLogs();

@@ -124,12 +124,24 @@ $(function() {
   $('#btn-ulp-popup').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuth.popup.authorize({scope: 'offline_access'});
+    webAuth.popup.authorize({ scope: 'offline_access' });
   });
   $('#btn-ulp-no-cname-popup').on('click', function() {
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
     webAuthWithoutCustomDomains.popup.authorize({});
+  });
+  $('#btn-ulp').on('click', function() {
+    webAuth.checkSession({}, function(err, authResult) {
+      logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
+      printLogs();
+    });
+  });
+  $('#btn-ulp-no-cname').on('click', function() {
+    webAuthWithoutCustomDomains.checkSession({}, function(err, authResult) {
+      logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
+      printLogs();
+    });
   });
 
   $('#a0js-form').on('submit', function(e) {

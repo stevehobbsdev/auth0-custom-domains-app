@@ -131,13 +131,13 @@ $(function() {
     window.localStorage.lastUsed = 'a0js';
     webAuthWithoutCustomDomains.popup.authorize({});
   });
-  $('#btn-ulp').on('click', function() {
+  $('#btn-checksession').on('click', function() {
     webAuth.checkSession({}, function(err, authResult) {
       logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
       printLogs();
     });
   });
-  $('#btn-ulp-no-cname').on('click', function() {
+  $('#btn-checksession-no-cname').on('click', function() {
     webAuthWithoutCustomDomains.checkSession({}, function(err, authResult) {
       logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
       printLogs();

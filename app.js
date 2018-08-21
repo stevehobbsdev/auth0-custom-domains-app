@@ -148,7 +148,7 @@ $(function() {
     e.preventDefault();
     clearLogs();
     window.localStorage.lastUsed = 'a0js';
-    webAuth.login({
+    webAuthWithoutCustomDomains.login({
       username: $('#email').val(),
       password: $('#password').val(),
       realm: 'acme'

@@ -65,7 +65,8 @@ var defaultOptions = {
   prefill: {
     email: 'johnfoo@gmail.com'
   },
-  allowedConnections: ['spotify']
+  allowedConnections: ['spotify'],
+  socialButtonStyle: 'small'
 };
 var webAuth = new auth0.WebAuth({
   domain: domain,

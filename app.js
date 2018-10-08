@@ -64,6 +64,9 @@ var defaultOptions = {
   allowShowPassword: true,
   prefill: {
     email: 'johnfoo@gmail.com'
+  },
+  auth: {
+    redirect: false
   }
 };
 var webAuth = new auth0.WebAuth({

@@ -88,7 +88,11 @@ function initLock() {
   return lock;
 }
 function initPasswordless() {
-  var lockPasswordless = new Auth0LockPasswordless(clientId, domain, defaultOptions);
+  var lockPasswordless = new Auth0LockPasswordless(
+    clientId,
+    domain,
+    Object.assign({}, defaultOptions, { socialButtonStyle: 'small' })
+  );
   window.localStorage.lastUsed = 'passwordless';
   subscribeToEvents(lockPasswordless);
   return lockPasswordless;

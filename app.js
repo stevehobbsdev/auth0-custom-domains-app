@@ -81,6 +81,12 @@ var webAuthWithoutCustomDomains = new auth0.WebAuth({
   clientID: clientId,
   responseType: 'token'
 });
+
+var newSdk = new Auth0Login({
+  domain: 'auth.brucke.club',
+  client_id: '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ'
+});
+
 function initLock() {
   var lock = new Auth0Lock(clientId, domain, defaultOptions);
   window.localStorage.lastUsed = 'lock';
@@ -148,6 +154,20 @@ $(function() {
     webAuthWithoutCustomDomains.checkSession({}, function(err, authResult) {
       logs.push({ event: 'a0js_parse_hash', arguments: [err, authResult] });
       printLogs();
+    });
+  });
+  $('#btn-newsdk-popup').on('click', function() {
+    newSdk.init().then(function() {
+      newSdk
+        .loginWithPopup()
+        .then(function(authResult) {
+          logs.push({ event: 'newsdk_login_success', arguments: [authResult] });
+          printLogs();
+        })
+        .catch(function(err) {
+          logs.push({ event: 'newsdk_login_error', arguments: [err] });
+          printLogs();
+        });
     });
   });
 

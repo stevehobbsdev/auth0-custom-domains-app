@@ -160,9 +160,11 @@ $(function() {
     newSdk.init().then(function() {
       newSdk
         .loginWithPopup()
-        .then(function(authResult) {
-          logs.push({ event: 'newsdk_login_success', arguments: [authResult] });
-          printLogs();
+        .then(function() {
+          newSdk.getUser().then(function(user) {
+            logs.push({ event: 'newsdk_login_success', arguments: [user] });
+            printLogs();
+          });
         })
         .catch(function(err) {
           logs.push({ event: 'newsdk_login_error', arguments: [err] });

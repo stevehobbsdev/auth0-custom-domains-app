@@ -60,13 +60,19 @@ function subscribeToEvents(instance) {
 var clientId = '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ';
 var domain = 'auth.brucke.club';
 var defaultOptions = {
-  configurationBaseUrl: 'https://cdn.auth0.com/',
-  allowShowPassword: true,
+  allowLogin: true,
+  allowSignUp: true,
+  allowForgotPassword: true,
+  closable: true,
+  allowedConnections: null,
+  rememberLastLogin: false,
+  hashCleanup: false,
+  mustAcceptTerms: false,
+  defaultADUsernameFromEmailPrefix: false,
+  socialButtonStyle: 'small',
+  configurationBaseUrl: 'https://cdn.auth0.com',
   prefill: {
     email: 'johnfoo@gmail.com'
-  },
-  auth: {
-    redirect: false
   }
 };
 var webAuth = new auth0.WebAuth({
@@ -110,6 +116,10 @@ $(function() {
     clearLogs();
     var lock = initLock();
     lock.show({
+      allowLogin: true,
+      allowSignUp: true,
+      allowForgotPassword: true,
+      initialScreen: 'login',
       languageDictionary: {
         title: 'Lock'
       }

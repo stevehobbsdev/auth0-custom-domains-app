@@ -125,6 +125,86 @@ $(function() {
       }
     });
   });
+  $('#btn-show-lock-huge-signup').on('click', function() {
+    clearLogs();
+    var lock = initLock();
+    lock.show({
+      autofocus: false,
+      allowLogin: true,
+      allowSignUp: true,
+      allowForgotPassword: true,
+      initialScreen: 'signUp',
+      prefill: { email: 'johnfoo@gmail.com' },
+      languageDictionary: {
+        title: 'Lock'
+      },
+      additionalSignUpFields: [
+        {
+          name: 'address',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address221',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address1',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address2',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address3',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address4',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address45',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address6',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        },
+        {
+          name: 'address7',
+          placeholder: 'enter your address (optional)',
+          validator: function() {
+            return true;
+          }
+        }
+      ]
+    });
+  });
   $('#btn-show-passwordless').on('click', function() {
     clearLogs();
     var lockPasswordless = initPasswordless();

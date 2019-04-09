@@ -69,7 +69,7 @@ var defaultOptions = {
   hashCleanup: false,
   mustAcceptTerms: false,
   defaultADUsernameFromEmailPrefix: false,
-  socialButtonStyle: 'small',
+  // socialButtonStyle: 'small',
   configurationBaseUrl: 'https://cdn.auth0.com',
   prefill: {
     email: 'johnfoo@gmail.com'

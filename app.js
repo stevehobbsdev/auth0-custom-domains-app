@@ -88,11 +88,6 @@ var webAuthWithoutCustomDomains = new auth0.WebAuth({
   responseType: 'token'
 });
 
-var newSdk = new Auth0Login({
-  domain: 'auth.brucke.club',
-  client_id: '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ'
-});
-
 function initLock() {
   var lock = new Auth0Lock(clientId, domain, defaultOptions);
   window.localStorage.lastUsed = 'lock';
@@ -252,21 +247,21 @@ $(function() {
       printLogs();
     });
   });
-  $('#btn-newsdk-popup').on('click', function() {
-    newSdk.init().then(function() {
-      newSdk
-        .loginWithPopup()
-        .then(function() {
-          newSdk.getUser().then(function(user) {
-            logs.push({ event: 'newsdk_login_success', arguments: [user] });
-            printLogs();
-          });
-        })
-        .catch(function(err) {
-          logs.push({ event: 'newsdk_login_error', arguments: [err] });
+  $('#btn-newsdk-popup').on('click', function () {
+    createAuth0Client({
+      domain: 'auth.brucke.club',
+      client_id: '6qgR882b0vAiuTwsI6NZC9zynrUVF0mQ'
+    }).then(function (auth0) {
+      auth0.loginWithPopup().then(function () {
+        auth0.getUser().then(function (user) {
+          logs.push({ event: 'newsdk_login_success', arguments: [user] });
           printLogs();
         });
-    });
+      })
+    }).catch(function (err) {
+        logs.push({ event: 'newsdk_login_error', arguments: [err] });
+        printLogs();
+      });;
   });
 
   $('#a0js-form').on('submit', function(e) {

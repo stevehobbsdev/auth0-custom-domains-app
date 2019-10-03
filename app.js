@@ -98,7 +98,7 @@ function initPasswordless() {
   var lockPasswordless = new Auth0LockPasswordless(
     clientId,
     domain,
-    Object.assign({}, defaultOptions, { socialButtonStyle: 'small' })
+    Object.assign({}, defaultOptions, { socialButtonStyle: 'small', allowedConnections: ['sms'] })
   );
   window.localStorage.lastUsed = 'passwordless';
   subscribeToEvents(lockPasswordless);
